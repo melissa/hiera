@@ -117,6 +117,9 @@ def prepare_installation
     opts.on('--mandir[=OPTIONAL]', 'Installation directory for man pages', 'overrides RbConfig::CONFIG["mandir"]') do |mandir|
       InstallOptions.mandir = mandir
     end
+    opts.on('--datadir[=OPTIONAL]', 'Installation directory for data files', 'Default /var/lib') do |datadir|
+      InstallOptions.datadir = datadir
+    end
     opts.on('--full', 'Performs a full installation. All', 'optional installation steps are run.') do |full|
       InstallOptions.configs = true
     end
@@ -188,21 +191,30 @@ def prepare_installation
     destdir = ''
   end
 
+  if InstallOptions.datadir
+    datadir = InstallOptions.datadir
+  else
+    datadir = '/var/lib'
+  end
+
   configdir = join(destdir, configdir)
   bindir = join(destdir, bindir)
   mandir = join(destdir, mandir)
   sitelibdir = join(destdir, sitelibdir)
+  datadir = join(destdir, datadir)
 
   makedirs(configdir) if InstallOptions.configs
   makedirs(bindir)
   makedirs(mandir)
   makedirs(sitelibdir)
+  makedirs(datadir)
 
   InstallOptions.site_dir = sitelibdir
   InstallOptions.config_dir = configdir
   InstallOptions.bin_dir  = bindir
   InstallOptions.lib_dir  = libdir
   InstallOptions.man_dir  = mandir
+  InstallOptions.data_dir = datadir
 end
 
 ##

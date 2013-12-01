@@ -43,12 +43,12 @@ A simple pluggable Hierarchical Database.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT/%{_sharedstatedir}/hiera
 %{ruby} install.rb \
   --destdir=$RPM_BUILD_ROOT \
   --sitelibdir=%{hiera_libdir} \
   --bindir=%{_bindir} \
   --configdir=%{_sysconfdir} \
+  --datadir=%{_sharedstatedir}/hiera \
   --configs
 
 %clean
@@ -61,7 +61,7 @@ rm -rf $RPM_BUILD_ROOT
 %{hiera_libdir}/hiera.rb
 %{hiera_libdir}/hiera
 %config(noreplace) %{_sysconfdir}/hiera.yaml
-%{_sharedstatedir}/hiera
+%dir %{_sharedstatedir}/hiera
 %doc COPYING README.md
 
 

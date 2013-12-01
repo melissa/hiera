@@ -14,15 +14,14 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 RUBY=/usr/bin/ruby
 LIBDIR=$(shell $(RUBY) -rrbconfig -e 'puts RbConfig::CONFIG["vendordir"]')
 BINDIR=$(shell $(RUBY) -rrbconfig -e 'puts RbConfig::CONFIG["bindir"]')
-DATADIR=$(CURDIR)/debian/$(cdbs_curpkg)/var/lib/hiera
 
 install/hiera::
-	mkdir -p $(DATADIR)
 	$(RUBY) $(CURDIR)/install.rb \
 		--destdir=$(CURDIR)/debian/$(cdbs_curpkg) \
 		--sitelibdir=$(LIBDIR) \
 		--bindir=$(BINDIR) \
 		--configdir=/etc \
+		--datadir=/var/lib/hiera \
 		--configs
 
 clean::
